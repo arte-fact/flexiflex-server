@@ -19,6 +19,13 @@ logging:
         com.artefact.flexiflex: INFO
         io.github.jhipster: INFO
 
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        service-url:
+            defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+
 spring:
     devtools:
         restart:
@@ -55,6 +62,15 @@ spring:
         password:
     thymeleaf:
         cache: true
+    sleuth:
+        sampler:
+            probability: 1 # report 100% of traces
+    zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
+        base-url: http://localhost:9411
+        enabled: false
+        locator:
+            discovery:
+                enabled: true
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
@@ -98,9 +114,17 @@ jhipster:
             time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
             max-entries: 1000 # Number of objects in each cache entry
     security:
-        remember-me:
-            # security key (this key should be unique for your application, and kept secret)
-            key: e94ae37c7dcf8fc6c3969b6ca64e3e40693d39e3a6873ef10bd94c9d1ebad9cfc92f65bcaf9becad14b20aae1ec7f72f1e4e
+        authentication:
+            jwt:
+                # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+                # As this is the PRODUCTION configuration, you MUST change the default key, and store it securely:
+                # - In the JHipster Registry (which includes a Spring Cloud Config server)
+                # - In a separate `application-prod.yml` file, in the same folder as your executable WAR file
+                # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
+                base64-secret: YzljNGYxNGMzYTI2YWNjN2NlOGY3NmJkMzM3ZmQzNTI2M2FjMmQzMmExNTJlOTQ1MmI0MDc5MTMxZTE2M2ZlOTNhM2E5M2UzZjRkZjMwMDk2NTU3NzFmNzU1MjIwYjVkNTNlZGQzNWZjZjMxNDk5OTI2MDAwYjljYTMyZWU3MWM=
+                # Token is valid 24 hours
+                token-validity-in-seconds: 86400
+                token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: flexiflex@localhost
         base-url: http://my-server-url-to-change # Modify according to your server's URL

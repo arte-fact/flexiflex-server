@@ -13,6 +13,12 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+eureka:
+    client:
+        enabled: false
+    instance:
+        appname: flexiflex
+        instanceId: flexiflex:${spring.application.instance-id:${random.value}}
 
 spring:
     application:
@@ -89,9 +95,12 @@ jhipster:
         from: test@localhost
         base-url: http://127.0.0.1:8080
     security:
-        remember-me:
-            # security key (this key should be unique for your application, and kept secret)
-            key: e94ae37c7dcf8fc6c3969b6ca64e3e40693d39e3a6873ef10bd94c9d1ebad9cfc92f65bcaf9becad14b20aae1ec7f72f1e4e
+        authentication:
+            jwt:
+                # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
+                base64-secret: YzljNGYxNGMzYTI2YWNjN2NlOGY3NmJkMzM3ZmQzNTI2M2FjMmQzMmExNTJlOTQ1MmI0MDc5MTMxZTE2M2ZlOTNhM2E5M2UzZjRkZjMwMDk2NTU3NzFmNzU1MjIwYjVkNTNlZGQzNWZjZjMxNDk5OTI2MDAwYjljYTMyZWU3MWM=
+                # Token is valid 24 hours
+                token-validity-in-seconds: 86400
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         logs: # Reports Dropwizard metrics in the logs

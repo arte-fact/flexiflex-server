@@ -1,7 +1,8 @@
 {
     "generator-jhipster": {
         "promptValues": {
-            "packageName": "com.artefact.flexiflex"
+            "packageName": "com.artefact.flexiflex",
+            "nativeLanguage": "fr"
         },
         "jhipsterVersion": "5.7.2",
         "applicationType": "monolith",
@@ -9,25 +10,27 @@
         "packageName": "com.artefact.flexiflex",
         "packageFolder": "com/artefact/flexiflex",
         "serverPort": "8080",
-        "authenticationType": "session",
+        "authenticationType": "jwt",
         "cacheProvider": "ehcache",
         "enableHibernateCache": true,
         "websocket": "spring-websocket",
         "databaseType": "sql",
-        "devDatabaseType": "h2Memory",
+        "devDatabaseType": "h2Disk",
         "prodDatabaseType": "postgresql",
         "searchEngine": "elasticsearch",
         "messageBroker": false,
-        "serviceDiscoveryType": false,
+        "serviceDiscoveryType": "eureka",
         "buildTool": "maven",
         "enableSwaggerCodegen": false,
-        "rememberMeKey": "e94ae37c7dcf8fc6c3969b6ca64e3e40693d39e3a6873ef10bd94c9d1ebad9cfc92f65bcaf9becad14b20aae1ec7f72f1e4e",
+        "jwtSecretKey": "YzljNGYxNGMzYTI2YWNjN2NlOGY3NmJkMzM3ZmQzNTI2M2FjMmQzMmExNTJlOTQ1MmI0MDc5MTMxZTE2M2ZlOTNhM2E5M2UzZjRkZjMwMDk2NTU3NzFmNzU1MjIwYjVkNTNlZGQzNWZjZjMxNDk5OTI2MDAwYjljYTMyZWU3MWM=",
         "clientFramework": "angularX",
         "useSass": true,
         "clientPackageManager": "npm",
         "testFrameworks": [],
         "jhiPrefix": "jhi",
         "otherModules": [],
-        "enableTranslation": false
+        "enableTranslation": true,
+        "nativeLanguage": "fr",
+        "languages": ["fr", "en"]
     }
 }

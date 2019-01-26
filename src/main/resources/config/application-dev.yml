@@ -19,6 +19,14 @@ logging:
         io.github.jhipster: DEBUG
         com.artefact.flexiflex: DEBUG
 
+eureka:
+    instance:
+        prefer-ip-address: true
+    client:
+        enabled: false # By default, the JHipster Registry is not used in the "dev" profile
+        service-url:
+            defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+
 spring:
     profiles:
         active: dev
@@ -37,7 +45,7 @@ spring:
             indent-output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:mem:flexiflex;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        url: jdbc:h2:file:./target/h2db/db/flexiflex;DB_CLOSE_DELAY=-1
         username: flexiflex
         password:
         hikari:
@@ -72,6 +80,15 @@ spring:
         cache-duration: PT1S # 1 second, see the ISO 8601 standard
     thymeleaf:
         cache: false
+    sleuth:
+        sampler:
+            probability: 1 # report 100% of traces
+    zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
+        base-url: http://localhost:9411
+        enabled: false
+        locator:
+            discovery:
+                enabled: true
 
 server:
     port: 8080
@@ -94,13 +111,17 @@ jhipster:
         allowed-origins: "*"
         allowed-methods: "*"
         allowed-headers: "*"
-        exposed-headers: "Link,X-Total-Count"
+        exposed-headers: "Authorization,Link,X-Total-Count"
         allow-credentials: true
         max-age: 1800
     security:
-        remember-me:
-            # security key (this key should be unique for your application, and kept secret)
-            key: e94ae37c7dcf8fc6c3969b6ca64e3e40693d39e3a6873ef10bd94c9d1ebad9cfc92f65bcaf9becad14b20aae1ec7f72f1e4e
+        authentication:
+            jwt:
+                # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+                base64-secret: YzljNGYxNGMzYTI2YWNjN2NlOGY3NmJkMzM3ZmQzNTI2M2FjMmQzMmExNTJlOTQ1MmI0MDc5MTMxZTE2M2ZlOTNhM2E5M2UzZjRkZjMwMDk2NTU3NzFmNzU1MjIwYjVkNTNlZGQzNWZjZjMxNDk5OTI2MDAwYjljYTMyZWU3MWM=
+                # Token is valid 24 hours
+                token-validity-in-seconds: 86400
+                token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: flexiflex@localhost
         base-url: http://127.0.0.1:8080
