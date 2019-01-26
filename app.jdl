@@ -1,0 +1,6 @@
+entity Product {
+    urls TextBlob required
+    title String required maxlength(255)
+    synopsis TextBlob required
+    tmdbId Integer
+}
