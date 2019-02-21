@@ -12,6 +12,10 @@ services:
             - SPRING_DATA_JEST_URI=http://flexiflex-elasticsearch:9200
         ports:
             - 9090:8080
+        labels:
+            traefik.backend: "flexiflex-backend"
+            traefik.frontend.rule: "Host:api.flexiflex.tk"
+            traefik.enable: "true"
     flexiflex-postgresql:
         extends:
             file: postgresql.yml
@@ -27,3 +31,7 @@ services:
         environment:
             - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
             - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
+        labels:
+            traefik.backend: "flexiflex-backend"
+            traefik.frontend.rule: "Host:registry.flexiflex.tk"
+            traefik.enable: "true"
