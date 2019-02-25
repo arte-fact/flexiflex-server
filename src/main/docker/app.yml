@@ -10,8 +10,6 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:postgresql://flexiflex-postgresql:5432/flexiflex
             - JHIPSTER_SLEEP=30 # gives time for the JHipster Registry to boot before the application
             - SPRING_DATA_JEST_URI=http://flexiflex-elasticsearch:9200
-        ports:
-            - 9090:8080
         labels:
             traefik.backend: "flexiflex-backend"
             traefik.frontend.rule: "Host:api.flexiflex.tk"
@@ -31,7 +29,12 @@ services:
         environment:
             - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
             - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
-        labels:
-            traefik.backend: "flexiflex-backend"
-            traefik.frontend.rule: "Host:registry.flexiflex.tk"
-            traefik.enable: "true"
+    networks:
+        - default
+    labels:
+      - "traefik.frontend.rule=Host:api.flexiflex.tk"
+      - "traefik.port=8080"
+networks:  
+  default:
+    external:
+      name: traefik_default
